@@ -1,0 +1,89 @@
+<mat-card>
+  <mat-toolbar color="accent">  
+    <span style="color:white;text-align:center;">  
+      Roles  
+    </span>   
+  </mat-toolbar>
+  <form [formGroup]="roleForm" (ngSubmit)="onFormSubmit(roleForm.value)">  
+      <br>
+      <br>
+    <div *ngShow="">
+        <mat-form-field class="" style="width: 100%;">  
+            <input formControlName="roleId"  matTooltip="Enter Role Id" matInput placeholder="Role ID">  
+        </mat-form-field>  
+        <mat-error>  
+          <span *ngIf="!roleForm.get('roleId').value && roleForm.get('roleId').touched"></span>  
+        </mat-error>
+    </div>
+    <div>
+        <mat-form-field class="" style="width: 100%;">  
+            <input formControlName="roleName"  matTooltip="Enter Role Name" matInput placeholder="Role Name">  
+        </mat-form-field>  
+        <mat-error>  
+          <span *ngIf="!roleForm.get('roleName').value && roleForm.get('roleName').touched"></span>  
+        </mat-error>
+    </div>
+    <div>
+        <button type="submit" mat-raised-button color="accent" matTooltip="Click Submit Button" [disabled]="!roleForm.valid">Submit</button> 
+
+        <button type="reset" mat-raised-button color="accent" matTooltip="Click Reset Button" (click)="resetForm()" class="giveSpace">Reset</button>
+      
+        <p *ngIf="dataSaved" style="color:rgb(0, 128, 0);font-size:20px;font-weight:bold" Class="success" align="left">  
+            {{massage}}  
+          </p>  
+    </div>
+    <br>
+    <br>
+    <table mat-table [dataSource]="roles" class="mat-elevation-z8">
+        <!-- Weight Column -->
+      <ng-container matColumnDef="roleId">
+        <th mat-header-cell *matHeaderCellDef> RoleId </th>
+        <td mat-cell *matCellDef="let role"> {{role.roleId}} </td>
+      </ng-container>
+        
+          <!-- Symbol Column -->
+      <ng-container matColumnDef="roleName">
+        <th mat-header-cell *matHeaderCellDef> RoleName </th>
+        <td mat-cell *matCellDef="let role"> {{role.roleName}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="edit">
+          <th mat-header-cell *matHeaderCellDef> Edit </th>
+          <td mat-cell *matCellDef="let role"> 
+            <button mat-raised-button type="button"color="primary" (click)="loadRoleForEdit(role, $event)">
+              <mat-icon>edit</mat-icon> Edit
+            </button>
+          </td>
+        </ng-container>
+        
+        <ng-container matColumnDef="delete">
+            <th mat-header-cell *matHeaderCellDef> Delete </th>
+            <td mat-cell *matCellDef="let role"> 
+                <button mat-raised-button type="button"color="primary" (click)="deleteRole(role.roleId, $event)">
+                    <mat-icon>delete</mat-icon> Delete
+                </button>
+            </td>
+          </ng-container>
+          
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+  </form>
+  
+</mat-card>
+<!-- <h3 style="text-align:left">Roles</h3>
+{{errormsg}}
+
+<ul class="items">
+    <li *ngFor="let role of roles">
+        <span class="badge">{{role.roleId}}</span> {{role.roleName}}
+    </li>
+</ul>
+
+<mat-list>
+    <mat-list-item *ngFor="let role of roles">
+        <span>{{role.roleId}}</span> {{role.roleName}}
+    </mat-list-item>
+</mat-list>    -->
+

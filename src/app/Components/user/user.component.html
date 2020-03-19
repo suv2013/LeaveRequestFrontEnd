@@ -1,0 +1,94 @@
+<mat-card>
+  <mat-toolbar color="accent">
+    <span style="color:white;text-align:center;">
+        Users
+    </span>
+  </mat-toolbar>
+  {{errormsg}}
+  <form [formGroup]="userForm" (ngSubmit)="onUserFormSubmit(userForm.value)">
+    <br><br>
+    <div *ngShow="">
+      <mat-form-field class="" style="width: 100%;">
+        <input  formControlName="userId"  matTooltip="Enter User Id" matInput placeholder="User ID">
+      </mat-form-field>
+      <mat-error>
+        <span *ngIf="!userForm.get('userId').value && userForm.get('userId').touched">
+        </span>
+      </mat-error>
+    </div>
+    <div>
+      <mat-form-field class="" style="width: 100%;">
+        <input formControlName="userName"  matTooltip="Enter Role Name" matInput placeholder="User Name">
+      </mat-form-field>
+      <mat-error>
+          <span *ngIf="!userForm.get('userName').value && userForm.get('userName').touched">        
+        </span>
+      </mat-error>
+    </div>
+    <div>
+      <mat-form-field class="" style="width: 100%;">
+        <input formControlName="firstName"  matTooltip="Enter Fisrt Name" matInput placeholder="First Name">
+      </mat-form-field>
+      <mat-error>
+          <span *ngIf="!userForm.get('firstName').value && userForm.get('firstName').touched">
+          </span>
+      </mat-error>
+    </div>
+    <div>
+      <mat-form-field class="" style="width: 100%;">
+          <input formControlName="lastName"  matTooltip="Enter Last Name" matInput placeholder="Last Name">        
+      </mat-form-field>
+      <mat-error>
+          <span *ngIf="!userForm.get('lastName').value && userForm.get('lastName').touched"></span>       
+      </mat-error>
+    </div>
+    <div>
+        <button type="submit" mat-raised-button color="accent" matTooltip="Click Submit Button" [disabled]="!userForm.valid">Submit</button> 
+
+        <button type="reset" mat-raised-button color="accent" matTooltip="Click Reset Button" (click)="resetForm()" class="giveSpace">Reset</button>
+      
+        <p *ngIf="dataSaved" style="color:rgb(0, 128, 0);font-size:20px;font-weight:bold" Class="success" align="left">  
+            {{massage}}  
+        </p> 
+    </div>
+    <br><br>
+    <table mat-table [dataSource]="users" class="mat-elevation-z8">
+        <!-- Weight Column -->
+      <ng-container matColumnDef="userId">
+            <th mat-header-cell *matHeaderCellDef> User Id </th>
+            <td mat-cell *matCellDef="let user"> {{user.userId}} </td>
+          </ng-container>
+        
+          <!-- Symbol Column -->
+          <ng-container matColumnDef="userName">
+            <th mat-header-cell *matHeaderCellDef> User Name </th>
+            <td mat-cell *matCellDef="let user"> {{user.userName}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="fullname">
+                <th mat-header-cell *matHeaderCellDef> Full Name </th>
+                <td mat-cell *matCellDef="let user"> {{user.fullname}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="edit">
+              <th mat-header-cell *matHeaderCellDef> Edit </th>
+              <td mat-cell *matCellDef="let user"> 
+                <button mat-raised-button type="button"color="primary" (click)="loadUserForEdit(user, $event)">
+                  <mat-icon>edit</mat-icon> Edit
+                </button>
+              </td>
+          </ng-container>
+            
+            <ng-container matColumnDef="delete">
+                <th mat-header-cell *matHeaderCellDef> Delete </th>
+                <td mat-cell *matCellDef="let user"> 
+                    <button mat-raised-button type="button"color="primary" (click)="deleteUser(user.userId, $event)">
+                        <mat-icon>delete</mat-icon> Delete
+                    </button>
+                </td>
+            </ng-container>
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </form>
+</mat-card>
